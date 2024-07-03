@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "company_infos",
+  "info": {
+    "singularName": "company-info",
+    "pluralName": "company-infos",
+    "displayName": "company-info"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "story": {
+      "type": "blocks",
+      "required": true
+    }
+  }
+}

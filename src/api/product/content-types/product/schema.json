@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "price_per_meter": {
+      "type": "integer",
+      "required": true
+    },
+    "width": {
+      "type": "integer",
+      "required": true
+    },
+    "thickness": {
+      "required": true,
+      "type": "integer"
+    },
+    "length": {
+      "type": "integer",
+      "required": true
+    },
+    "product_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product-category.product-category",
+      "inversedBy": "products"
+    }
+  }
+}
