@@ -865,7 +865,7 @@ export interface ApiCertificateCertificate extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    image: Attribute.Media<'images', true> & Attribute.Required;
+    image: Attribute.Media<'images'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -958,6 +958,7 @@ export interface ApiProductProduct extends Schema.CollectionType {
     singularName: 'product';
     pluralName: 'products';
     displayName: 'product';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -966,14 +967,8 @@ export interface ApiProductProduct extends Schema.CollectionType {
     title: Attribute.String & Attribute.Required;
     image: Attribute.Media<'images'> & Attribute.Required;
     price_per_meter: Attribute.Integer & Attribute.Required;
-    width: Attribute.Integer & Attribute.Required;
-    thickness: Attribute.Integer & Attribute.Required;
-    length: Attribute.Integer & Attribute.Required;
-    product_category: Attribute.Relation<
-      'api::product.product',
-      'manyToOne',
-      'api::product-category.product-category'
-    >;
+    additional_info: Attribute.DynamicZone<['product-field.product-field']>;
+    type: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -985,43 +980,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductCategoryProductCategory
-  extends Schema.CollectionType {
-  collectionName: 'product_categories';
-  info: {
-    singularName: 'product-category';
-    pluralName: 'product-categories';
-    displayName: 'product_category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required;
-    info: Attribute.Blocks & Attribute.Required;
-    products: Attribute.Relation<
-      'api::product-category.product-category',
-      'oneToMany',
-      'api::product.product'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product-category.product-category',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product-category.product-category',
       'oneToOne',
       'admin::user'
     > &
@@ -1094,38 +1052,6 @@ export interface ApiProjectProject extends Schema.CollectionType {
   };
 }
 
-export interface ApiServiceService extends Schema.CollectionType {
-  collectionName: 'services';
-  info: {
-    singularName: 'service';
-    pluralName: 'services';
-    displayName: 'service';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required;
-    description: Attribute.Text & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::service.service',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::service.service',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1150,10 +1076,8 @@ declare module '@strapi/types' {
       'api::company-info.company-info': ApiCompanyInfoCompanyInfo;
       'api::contact.contact': ApiContactContact;
       'api::product.product': ApiProductProduct;
-      'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::production-process.production-process': ApiProductionProcessProductionProcess;
       'api::project.project': ApiProjectProject;
-      'api::service.service': ApiServiceService;
     }
   }
 }
