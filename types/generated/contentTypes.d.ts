@@ -890,12 +890,18 @@ export interface ApiCompanyInfoCompanyInfo extends Schema.SingleType {
     singularName: 'company-info';
     pluralName: 'company-infos';
     displayName: 'company-info';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    story: Attribute.Blocks & Attribute.Required;
+    title: Attribute.String;
+    info: Attribute.Text;
+    blocks: Attribute.DynamicZone<['info-block.info-block']>;
+    production_title: Attribute.String;
+    production_info: Attribute.Text;
+    production_image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -980,6 +986,39 @@ export interface ApiProductProduct extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductionProduction extends Schema.SingleType {
+  collectionName: 'productions';
+  info: {
+    singularName: 'production';
+    pluralName: 'productions';
+    displayName: 'production';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.String;
+    banner: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    blocks: Attribute.DynamicZone<['info-block.info-block']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::production.production',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::production.production',
       'oneToOne',
       'admin::user'
     > &
@@ -1076,6 +1115,7 @@ declare module '@strapi/types' {
       'api::company-info.company-info': ApiCompanyInfoCompanyInfo;
       'api::contact.contact': ApiContactContact;
       'api::product.product': ApiProductProduct;
+      'api::production.production': ApiProductionProduction;
       'api::production-process.production-process': ApiProductionProcessProductionProcess;
       'api::project.project': ApiProjectProject;
     }

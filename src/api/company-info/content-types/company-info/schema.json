@@ -4,16 +4,41 @@
   "info": {
     "singularName": "company-info",
     "pluralName": "company-infos",
-    "displayName": "company-info"
+    "displayName": "company-info",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "story": {
-      "type": "blocks",
-      "required": true
+    "title": {
+      "type": "string"
+    },
+    "info": {
+      "type": "text"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "info-block.info-block"
+      ]
+    },
+    "production_title": {
+      "type": "string"
+    },
+    "production_info": {
+      "type": "text"
+    },
+    "production_image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
